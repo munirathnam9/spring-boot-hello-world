@@ -1,9 +1,14 @@
-FROM eclipse-temurin:8-jdk-alpine
-VOLUME /tmp
+# Use official OpenJDK 17 image
+FROM openjdk:17-jdk-slim
 
-ARG JAR_FILE
-ADD target/spring-boot-hello-world-1.0.0-SNAPSHOT.jar app.jar
+# Set the working directory inside the container
+WORKDIR /app
 
-ENV JAR_OPTS=""
-ENV JAVA_OPTS=""
-ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar $JAR_OPTS
+# Copy the Spring Boot JAR built by Maven
+COPY target/spring-boot-hello-world-1.0.0-SNAPSHOT.jar app.jar
+
+# Expose the port your app runs on
+EXPOSE 8080
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]

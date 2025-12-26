@@ -6,24 +6,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class HelloWorldControllerTest {
+@ExtendWith(MockitoExtension.class)
+class HelloWorldControllerTest {
 
-    private Map<String, String> result;
-    
     @InjectMocks
     private HelloWorldController controller;
 
     @Test
-    public void responseShouldContainHelloWorldKey() throws UnknownHostException {
-        result = controller.helloWorld();
-        
+    void responseShouldContainHelloWorldKey() throws UnknownHostException {
+        Map<String, String> result = controller.helloWorld();
+
         assertThat(result).containsKey(MESSAGE_KEY);
     }
-    
 }
