@@ -1,13 +1,25 @@
-# Use official OpenJDK 17 image
-FROM eclipse-temurin:17-jdk
+# -------- Stage 1: Build with Maven ----------
+FROM maven:3.9.2-eclipse-temurin-17 AS build
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the Spring Boot JAR built by Maven
-COPY target/spring-boot-hello-world-1.0.0-SNAPSHOT.jar app.jar
+# Copy Maven config and sources
+COPY pom.xml .
+COPY src ./src
 
-# Expose the port your app runs on
+# Build the application JAR (skip tests for speed if you want)
+RUN mvn clean package -DskipTests
+
+# -------- Stage 2: Runtime image with JDK ----------
+FROM eclipse-temurin:17-jdk
+
+WORKDIR /app
+
+# Copy the built JAR from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose port 8080 (default Spring Boot port)
 EXPOSE 8080
 
 # Run the application
