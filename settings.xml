@@ -1,0 +1,22 @@
+<settings>
+  <mirrors>
+    <mirror>
+      <id>central</id>
+      <mirrorOf>*</mirrorOf>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </mirror>
+  </mirrors>
+
+  <!-- OPTIONAL: add only if you are behind a proxy -->
+  <!--
+  <proxies>
+    <proxy>
+      <id>corp-proxy</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>YOUR_PROXY_HOST</host>
+      <port>YOUR_PROXY_PORT</port>
+    </proxy>
+  </proxies>
+  -->
+</settings>
